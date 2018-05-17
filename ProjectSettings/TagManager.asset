@@ -14,8 +14,8 @@ TagManager:
   - 
   - 
   - Tetriminos
-  - 
-  - 
+  - Background
+  - Settings
   - 
   - 
   - 
@@ -38,6 +38,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Backround
+    uniqueID: 911504075
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Settings
+    uniqueID: 2044197215
+    locked: 0
+  - name: Tetriminos
+    uniqueID: 3311381465
     locked: 0
