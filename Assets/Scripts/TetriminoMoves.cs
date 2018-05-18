@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class TetriminoMoves : MonoBehaviour
@@ -13,6 +13,7 @@ public class TetriminoMoves : MonoBehaviour
     private bool rightMoveActive = true;
     private float timeLeftPressed = 0f;
     private float timeRightPressed = 0f;
+	private float timeDownPressed = 0f;
 
 	private TetriminoCollisions collisionManager;
 
@@ -42,44 +43,36 @@ public class TetriminoMoves : MonoBehaviour
     {
         if (leftMoveActive)
         {
-			if (Input.GetKeyDown(KeyCode.LeftArrow))
-				MoveLeft();
-            else if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-            {
-                timeLeftPressed += Time.deltaTime;
-                if (timeLeftPressed > 0.5)
-                {
-					MoveLeft();
-                    timeLeftPressed -= 0.1f;
-                }
-            }
-            else if (Input.GetKeyUp(KeyCode.LeftArrow))
-                timeLeftPressed = 0f;
+			SmoothReaction(KeyCode.LeftArrow, ref timeLeftPressed, MoveLeft);
         }
 
         if (rightMoveActive)
         {
-			if (Input.GetKeyDown(KeyCode.RightArrow))
-				MoveRight();
-            else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
-            {
-                timeRightPressed += Time.deltaTime;
-                if (timeRightPressed > 0.5)
-                {
-					MoveRight();
-                    timeRightPressed -= 0.1f;
-                }
-            }
-            else if (Input.GetKeyUp(KeyCode.RightArrow))
-                timeRightPressed = 0f;
+			SmoothReaction(KeyCode.RightArrow, ref timeRightPressed, MoveRight);
         }
 
+		SmoothReaction(KeyCode.DownArrow, ref timeDownPressed, MoveDown);
+        
 		if (Input.GetKeyDown(KeyCode.UpArrow))
 			Rotate();
-
-		if (Input.GetKeyDown(KeyCode.DownArrow))
-			MoveDown();
     }
+    
+    private void SmoothReaction(KeyCode code, ref float timePassed, Action action)
+	{
+		if (Input.GetKeyDown(code))
+            action();
+        else if (Input.GetKey(code))
+        {
+            timePassed += Time.deltaTime;
+            if (timePassed > 0.5)
+            {
+                action();
+                timePassed -= 0.1f;
+            }
+        }
+        else if (Input.GetKeyUp(code))
+            timePassed = 0f;
+	}
 
     private IEnumerator Fall()
     {
