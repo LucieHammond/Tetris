@@ -36,6 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4400701546252800}
+  - component: {fileID: 114490957571049838}
   m_Layer: 8
   m_Name: I-Tetrimino
   m_TagString: Untagged
@@ -263,6 +264,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &114490957571049838
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1397353896377396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd6a0bfe8ff94348b32fe5e6f290d0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationPoint: {x: 2, y: -2, z: 0}
 --- !u!212 &212245467679101494
 SpriteRenderer:
   m_ObjectHideFlags: 1
