@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4400701546252800}
   - component: {fileID: 114490957571049838}
-  - component: {fileID: 50847982663054060}
+  - component: {fileID: 114743972305653772}
   m_Layer: 8
   m_Name: I-Tetrimino
   m_TagString: Untagged
@@ -165,26 +165,6 @@ Transform:
   m_Father: {fileID: 4400701546252800}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50847982663054060
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1397353896377396}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &61037603972052852
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -297,6 +277,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationPoint: {x: 2, y: -2, z: 0}
+--- !u!114 &114743972305653772
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1397353896377396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99c6c4ed1f8464a8cb454bebbeb9b69b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squares:
+  - {fileID: 4960124549492728}
+  - {fileID: 4953302636400724}
+  - {fileID: 4640533614026786}
+  - {fileID: 4685120987623274}
 --- !u!212 &212245467679101494
 SpriteRenderer:
   m_ObjectHideFlags: 1

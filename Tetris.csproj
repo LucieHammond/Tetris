@@ -258,7 +258,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\RandomExtensions.cs" />
-    <Compile Include="Assets\Scripts\TetriminoBehaviour.cs" />
+    <Compile Include="Assets\Scripts\TetriminoCollisions.cs" />
+    <Compile Include="Assets\Scripts\TetriminoMoves.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
