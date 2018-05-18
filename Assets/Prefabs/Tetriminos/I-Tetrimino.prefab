@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4953302636400724}
   - component: {fileID: 212245467679101494}
-  - component: {fileID: 61184363545829382}
+  - component: {fileID: 61037603972052852}
   m_Layer: 8
   m_Name: Square (1)
   m_TagString: Untagged
@@ -37,6 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4400701546252800}
   - component: {fileID: 114490957571049838}
+  - component: {fileID: 50847982663054060}
   m_Layer: 8
   m_Name: I-Tetrimino
   m_TagString: Untagged
@@ -53,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4685120987623274}
   - component: {fileID: 212664185925482440}
-  - component: {fileID: 61484207490888998}
+  - component: {fileID: 61382749206951436}
   m_Layer: 8
   m_Name: Square (3)
   m_TagString: Untagged
@@ -70,7 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4640533614026786}
   - component: {fileID: 212554914246901794}
-  - component: {fileID: 61334348458997576}
+  - component: {fileID: 61811875835241592}
   m_Layer: 8
   m_Name: Square (2)
   m_TagString: Untagged
@@ -87,7 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4960124549492728}
   - component: {fileID: 212455211491690870}
-  - component: {fileID: 61836802220219878}
+  - component: {fileID: 61311236000149510}
   m_Layer: 8
   m_Name: Square
   m_TagString: Untagged
@@ -164,7 +165,27 @@ Transform:
   m_Father: {fileID: 4400701546252800}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61184363545829382
+--- !u!50 &50847982663054060
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1397353896377396}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &61037603972052852
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -189,12 +210,12 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!61 &61334348458997576
+--- !u!61 &61311236000149510
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1897564381546292}
+  m_GameObject: {fileID: 1991849029160134}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -214,7 +235,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!61 &61484207490888998
+--- !u!61 &61382749206951436
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -239,12 +260,12 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!61 &61836802220219878
+--- !u!61 &61811875835241592
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1991849029160134}
+  m_GameObject: {fileID: 1897564381546292}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
