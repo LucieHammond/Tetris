@@ -281,6 +281,7 @@ MonoBehaviour:
   - {fileID: 4145165770967164}
   - {fileID: 4626166128893468}
   - {fileID: 4600699797799964}
+  rotationSpace: {x: 0, y: 0}
 --- !u!114 &114837775650972266
 MonoBehaviour:
   m_ObjectHideFlags: 1

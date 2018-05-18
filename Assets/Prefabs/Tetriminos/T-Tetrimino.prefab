@@ -293,6 +293,7 @@ MonoBehaviour:
   - {fileID: 4903458888485292}
   - {fileID: 4393262210383972}
   - {fileID: 4167767526260598}
+  rotationSpaceSize: 3
 --- !u!212 &212071998463387080
 SpriteRenderer:
   m_ObjectHideFlags: 1

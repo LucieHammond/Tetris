@@ -74,8 +74,8 @@ public class TetriminoMoves : MonoBehaviour
                 timeRightPressed = 0f;
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-            transform.RotateAround(transform.position + transform.rotation * rotationPoint, Vector3.back, 90f);
+		if (Input.GetKeyDown(KeyCode.UpArrow))
+			Rotate();
 
 		if (Input.GetKeyDown(KeyCode.DownArrow))
 			MoveDown();
@@ -107,6 +107,12 @@ public class TetriminoMoves : MonoBehaviour
 	{
 		transform.Translate(0, -1, 0, Space.World);
 		hasMoved = true;
+	}
+
+    private void Rotate()
+	{
+		if (collisionManager.CheckRotation())
+		    transform.RotateAround(transform.position + transform.rotation * rotationPoint, Vector3.back, 90f);
 	}
 
     private void CheckCollisions()
