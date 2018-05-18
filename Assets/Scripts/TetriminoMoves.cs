@@ -123,6 +123,7 @@ public class TetriminoMoves : MonoBehaviour
         {
             StopAllCoroutines();
 			isActive = false;
+			collisionManager.Freeze();
         }
 		hasMoved = false;
 	}

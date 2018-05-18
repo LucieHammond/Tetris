@@ -14,17 +14,15 @@ public class TetriminoCollisions : MonoBehaviour {
 
 	public Transform[] squares;
 	public int rotationSpaceSize;
+	public GameManager gameManager { private get; set; }
 
-	private bool[][] playGrid;
+	public bool[][] playGrid { private get; set; }
 	private Vector3 playfieldStart = new Vector3(-5, -10, 0);
 	private RotationState rotationState = RotationState.Normal;
 
 	// Use this for initialization
 	private void Start () {
-		playGrid = new bool[22][];
-		for (int i = 0; i< playGrid.Length; i++){
-			playGrid[i] = new bool[10];
-		}
+		playGrid = gameManager.playGrid;
 	}
 
     public bool CheckRight()
@@ -105,4 +103,14 @@ public class TetriminoCollisions : MonoBehaviour {
 		return true;
 	}
 
+    public void Freeze()
+	{
+		Vector3 coords;
+        foreach (Transform square in squares)
+        {
+            coords = square.position - playfieldStart;
+			playGrid[(int)coords.y][(int)coords.x] = true;
+        }
+		gameManager.OnLanding();
+	}
 }
