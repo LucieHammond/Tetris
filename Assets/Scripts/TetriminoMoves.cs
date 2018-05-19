@@ -7,7 +7,7 @@ public class TetriminoMoves : MonoBehaviour
 
     public Vector3 rotationPoint;
 
-    private bool isActive = true;
+    private bool isActive = false;
 	private bool hasMoved = false;
     private bool leftMoveActive = true;
     private bool rightMoveActive = true;
@@ -21,11 +21,13 @@ public class TetriminoMoves : MonoBehaviour
     private void Start()
     {
 		collisionManager = GetComponent<TetriminoCollisions>();
-        if (isActive)
-        {
-            StartCoroutine(Fall());
-        }
     }
+
+    public void Activate()
+	{
+		isActive = true;
+        StartCoroutine(Fall());
+	}
 
     // Update is called once per frame
     private void Update()

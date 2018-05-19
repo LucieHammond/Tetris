@@ -433,6 +433,10 @@ MonoBehaviour:
   - {fileID: 1208624553199800, guid: d6f5683e196b943b3b992291c74b5c8a, type: 2}
   - {fileID: 1797108426324164, guid: 3cad7bbd04db340a7ae6f9fc28c0141b, type: 2}
   spawnPoint: {x: 3, y: 22, z: 0}
+  nextPoints:
+  - {fileID: 1284442903}
+  - {fileID: 251011088}
+  - {fileID: 1785584523}
 --- !u!1 &1284442902
 GameObject:
   m_ObjectHideFlags: 0

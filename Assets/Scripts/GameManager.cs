@@ -7,9 +7,11 @@ public class GameManager : MonoBehaviour
 	public GameObject[] tetriminos;
 	public Vector3 spawnPoint = new Vector3(3, 22, 0);
 	public bool[][] playGrid { get; set; }
+	public Transform[] nextPoints;
 
-	private Queue<GameObject> nextPieces = new Queue<GameObject>();
 	private System.Random random = new System.Random();
+	private Queue<GameObject> generatedQueue = new Queue<GameObject>();
+	private List<GameObject> nextPieces = new List<GameObject>();
 
 	// Use this for initialization
 	private void Start () {
@@ -21,30 +23,42 @@ public class GameManager : MonoBehaviour
         }
 
 		spawnPoint = transform.position + spawnPoint;
+
+		RandomGenerator();
+		for (int i = 0; i < 3; i++)
+		{
+			GameObject tetrimino = generatedQueue.Dequeue();
+			nextPieces.Add(Instantiate(tetrimino, nextPoints[i].position, Quaternion.identity));
+			nextPieces[i].GetComponent<TetriminoCollisions>().gameManager = this;
+		}
+
 		SpawnTetrimino();
-	}
-    
-	// Update is called once per frame
-	private void Update () {
-		
 	}
 
 	private void RandomGenerator()
     {
         GameObject[] nextBag = random.Shuffle(tetriminos);
         for (int i = 0; i < nextBag.Length; i++)
-            nextPieces.Enqueue(nextBag[i]);
+            generatedQueue.Enqueue(nextBag[i]);
     }
 
     private void SpawnTetrimino()
 	{
-		if (nextPieces.Count <= 3)
-		{
+		if (generatedQueue.Count <= 0)
 			RandomGenerator();
+
+		GameObject newPiece = nextPieces[0];
+		nextPieces.RemoveAt(0);
+		for (int i = 0; i < 2; i++)
+		{
+			nextPieces[i].transform.position = nextPoints[i].position;
 		}
-		GameObject tetrimino = nextPieces.Dequeue();
-        GameObject newPiece = Instantiate(tetrimino, spawnPoint, Quaternion.identity);
-		newPiece.GetComponent<TetriminoCollisions>().gameManager = this;
+		GameObject tetrimino = generatedQueue.Dequeue();
+		nextPieces.Add(Instantiate(tetrimino, nextPoints[2].position, Quaternion.identity));
+		nextPieces[2].GetComponent<TetriminoCollisions>().gameManager = this;
+
+		newPiece.transform.position = spawnPoint;
+		newPiece.GetComponent<TetriminoMoves>().Activate();
 	}
 
 	public void OnLanding()
