@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Application;
 
@@ -6,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
 	public GameObject[] tetriminos;
 	public Vector3 spawnPoint = new Vector3(3, 22, 0);
-	public bool[][] playGrid { get; set; }
+	public GameObject[][] playGrid { get; set; }
 	public Transform[] nextPoints;
 
 	private System.Random random = new System.Random();
@@ -15,11 +16,11 @@ public class GameManager : MonoBehaviour
 
 	// Use this for initialization
 	private void Start () {
-
-		playGrid = new bool[22][];
+    
+		playGrid = new GameObject[22][];
         for (int i = 0; i < playGrid.Length; i++)
         {
-            playGrid[i] = new bool[10];
+			playGrid[i] = new GameObject[10];
         }
 
 		spawnPoint = transform.position + spawnPoint;
@@ -67,7 +68,7 @@ public class GameManager : MonoBehaviour
         SpawnTetrimino();
     }
     
-	private List<int> CheckLines()
+	private void CheckLines()
 	{
 		List<int> completedLines = new List<int>();
 		for (int i = 0; i < playGrid.Length; i++)
@@ -84,6 +85,34 @@ public class GameManager : MonoBehaviour
 			if (completed)
 				completedLines.Add(i);
 		}
-		return completedLines;
+		RemoveLines(completedLines);
+	}
+
+	private void RemoveLines(List<int> lines)
+	{
+		if (lines.Count == 0)
+			return;
+		int offset = 0;
+
+		for (int i = 0; i < playGrid.Length; i++)
+		{
+			if (lines.Contains(i))
+			{
+				for (int j = 0; j < playGrid[i].Length; j++)
+				{
+					Destroy(playGrid[i][j]);
+				}    
+				offset++;
+			}
+			else
+			{
+				for (int j = 0; j < playGrid[i].Length; j++)
+                {
+                    if (offset > 0 && playGrid[i][j])
+                        playGrid[i][j].transform.Translate(0, -offset, 0, Space.World);
+					playGrid[i - offset][j] = playGrid[i][j];
+                }
+			}
+		}
 	}
 }

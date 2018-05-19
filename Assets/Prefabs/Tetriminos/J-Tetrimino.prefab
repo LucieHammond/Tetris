@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4022522864356596}
   - component: {fileID: 212475213849091514}
   - component: {fileID: 61516989499436928}
+  - component: {fileID: 114092517208066422}
   m_Layer: 8
   m_Name: Square (1)
   m_TagString: Untagged
@@ -55,6 +56,7 @@ GameObject:
   - component: {fileID: 4527868956233694}
   - component: {fileID: 212220288185593950}
   - component: {fileID: 61850054691787210}
+  - component: {fileID: 114610002749387544}
   m_Layer: 8
   m_Name: Square
   m_TagString: Untagged
@@ -72,6 +74,7 @@ GameObject:
   - component: {fileID: 4766218498761748}
   - component: {fileID: 212988844779919312}
   - component: {fileID: 61916625533862182}
+  - component: {fileID: 114782484517673854}
   m_Layer: 8
   m_Name: Square (3)
   m_TagString: Untagged
@@ -89,6 +92,7 @@ GameObject:
   - component: {fileID: 4046870290945654}
   - component: {fileID: 212559241597674706}
   - component: {fileID: 61273353841624858}
+  - component: {fileID: 114043480428638124}
   m_Layer: 8
   m_Name: Square (2)
   m_TagString: Untagged
@@ -265,6 +269,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &114043480428638124
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1865064924792286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae7748488f454919890b849c4ed6b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114092517208066422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1421090494624332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae7748488f454919890b849c4ed6b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114564936846637950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -277,6 +303,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationPoint: {x: 1.5, y: -1.5, z: 0}
+--- !u!114 &114610002749387544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1608791652777918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae7748488f454919890b849c4ed6b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114625438222871966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -294,6 +331,17 @@ MonoBehaviour:
   - {fileID: 4046870290945654}
   - {fileID: 4766218498761748}
   rotationSpaceSize: 3
+--- !u!114 &114782484517673854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1714155682967226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae7748488f454919890b849c4ed6b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212220288185593950
 SpriteRenderer:
   m_ObjectHideFlags: 1

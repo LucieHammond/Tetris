@@ -16,7 +16,7 @@ public class TetriminoCollisions : MonoBehaviour {
 	public int rotationSpaceSize;
 	public GameManager gameManager { private get; set; }
 
-	public bool[][] playGrid { private get; set; }
+	public GameObject[][] playGrid { private get; set; }
 	private Vector3 playfieldStart = new Vector3(-5, -10, 0);
 	private RotationState rotationState = RotationState.Normal;
 
@@ -109,7 +109,7 @@ public class TetriminoCollisions : MonoBehaviour {
         foreach (Transform square in squares)
         {
             coords = square.position - playfieldStart;
-			playGrid[(int)coords.y][(int)coords.x] = true;
+			playGrid[(int)coords.y][(int)coords.x] = square.gameObject;
         }
 		gameManager.OnLanding();
 	}
