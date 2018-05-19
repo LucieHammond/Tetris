@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System;
+using System.Collections;
 using UnityEngine;
 using Application;
 
@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 	public Vector3 spawnPoint = new Vector3(3, 22, 0);
 	public GameObject[][] playGrid { get; set; }
 	public Transform[] nextPoints;
+	public FlashingBehaviour[] shiningLines;
 
 	private System.Random random = new System.Random();
 	private Queue<GameObject> generatedQueue = new Queue<GameObject>();
@@ -61,14 +62,22 @@ public class GameManager : MonoBehaviour
 		newPiece.transform.position = spawnPoint;
 		newPiece.GetComponent<TetriminoMoves>().Activate();
 	}
-
-	public void OnLanding()
+    
+	public IEnumerator OnLanding()
     {
-		CheckLines();
+		List<int> lines = CheckLines();
+		if (lines.Count > 0)
+		{
+			foreach (int line in lines)
+			    shiningLines[line].Flash();
+			yield return new WaitForSeconds(0.9f);
+			RemoveLines(lines);
+		}
+			
         SpawnTetrimino();
     }
     
-	private void CheckLines()
+	private List<int> CheckLines()
 	{
 		List<int> completedLines = new List<int>();
 		for (int i = 0; i < playGrid.Length; i++)
@@ -85,15 +94,12 @@ public class GameManager : MonoBehaviour
 			if (completed)
 				completedLines.Add(i);
 		}
-		RemoveLines(completedLines);
+		return completedLines;
 	}
 
 	private void RemoveLines(List<int> lines)
 	{
-		if (lines.Count == 0)
-			return;
 		int offset = 0;
-
 		for (int i = 0; i < playGrid.Length; i++)
 		{
 			if (lines.Contains(i))

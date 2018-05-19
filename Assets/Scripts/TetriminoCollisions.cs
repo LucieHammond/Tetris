@@ -106,11 +106,12 @@ public class TetriminoCollisions : MonoBehaviour {
     public void Freeze()
 	{
 		Vector3 coords;
-        foreach (Transform square in squares)
-        {
-            coords = square.position - playfieldStart;
+		foreach (Transform square in squares)
+		{
+			coords = square.position - playfieldStart;
 			playGrid[(int)coords.y][(int)coords.x] = square.gameObject;
-        }
-		gameManager.OnLanding();
+		}
+		StartCoroutine(gameManager.OnLanding());
+
 	}
 }
