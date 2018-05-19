@@ -9,11 +9,14 @@ public class GameManager : MonoBehaviour
 	public Vector3 spawnPoint = new Vector3(3, 22, 0);
 	public GameObject[][] playGrid { get; set; }
 	public Transform[] nextPoints;
+	public Transform holdPoint;
 	public FlashingBehaviour[] shiningLines;
 
 	private System.Random random = new System.Random();
 	private Queue<GameObject> generatedQueue = new Queue<GameObject>();
 	private List<GameObject> nextPieces = new List<GameObject>();
+	private GameObject currentPiece;
+	private GameObject holdPiece;
 
 	// Use this for initialization
 	private void Start () {
@@ -37,6 +40,12 @@ public class GameManager : MonoBehaviour
 		SpawnTetrimino();
 	}
 
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+			SwitchWithHold();
+	}
+
 	private void RandomGenerator()
     {
         GameObject[] nextBag = random.Shuffle(tetriminos);
@@ -49,7 +58,7 @@ public class GameManager : MonoBehaviour
 		if (generatedQueue.Count <= 0)
 			RandomGenerator();
 
-		GameObject newPiece = nextPieces[0];
+		currentPiece = nextPieces[0];
 		nextPieces.RemoveAt(0);
 		for (int i = 0; i < 2; i++)
 		{
@@ -59,8 +68,8 @@ public class GameManager : MonoBehaviour
 		nextPieces.Add(Instantiate(tetrimino, nextPoints[2].position, Quaternion.identity));
 		nextPieces[2].GetComponent<TetriminoCollisions>().gameManager = this;
 
-		newPiece.transform.position = spawnPoint;
-		newPiece.GetComponent<TetriminoMoves>().Activate();
+		currentPiece.transform.position = spawnPoint;
+		currentPiece.GetComponent<TetriminoMoves>().isActive = true;
 	}
     
 	public IEnumerator OnLanding()
@@ -120,5 +129,30 @@ public class GameManager : MonoBehaviour
                 }
 			}
 		}
+	}
+    
+    private void SwitchWithHold()
+	{
+		// Store temporarily the currentPiece
+        GameObject tempPiece = currentPiece;
+
+		// Take the hold piece or the next one as currentPiece
+        if (holdPiece)
+        {
+            currentPiece = holdPiece;
+            currentPiece.transform.position = tempPiece.transform.position;
+            currentPiece.GetComponent<TetriminoMoves>().isActive = true;
+        }
+        else
+        {
+            SpawnTetrimino();
+			currentPiece.transform.position = tempPiece.transform.position;
+        }
+
+		// Place old current piece in the Hold box
+		holdPiece = tempPiece;
+		holdPiece.transform.position = holdPoint.position;
+        holdPiece.transform.rotation = Quaternion.identity;
+        holdPiece.GetComponent<TetriminoMoves>().isActive = false;
 	}
 }

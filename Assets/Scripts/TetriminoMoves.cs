@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class TetriminoMoves : MonoBehaviour
 {
-
+	public bool isActive { get; set; }
     public Vector3 rotationPoint;
 	public float speed // In nb of square fall per second
 	{
 		get { return 1 / timeInterval; }
 		set { timeInterval = 1 / value; }
 	}
-
-    private bool isActive = false;
+   
 	private bool hasMoved = false;
     private bool leftMoveActive = true;
     private bool rightMoveActive = true;
@@ -30,11 +29,6 @@ public class TetriminoMoves : MonoBehaviour
     {
 		collisionManager = GetComponent<TetriminoCollisions>();
     }
-
-    public void Activate()
-	{
-		isActive = true;
-	}
 
     // Update is called once per frame
     private void Update()
