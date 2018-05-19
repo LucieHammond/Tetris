@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 	private GameObject currentPiece;
 	private GameObject holdPiece;
 
+	private LevelDesign levels;
+
 	// Use this for initialization
 	private void Start () {
     
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
         }
 
 		spawnPoint = transform.position + spawnPoint;
+		levels = GetComponent<LevelDesign>();
 
 		RandomGenerator();
 		for (int i = 0; i < 3; i++)
@@ -79,6 +82,7 @@ public class GameManager : MonoBehaviour
 		{
 			foreach (int line in lines)
 			    shiningLines[line].Flash();
+			levels.NewLines(lines);
 			yield return new WaitForSeconds(0.9f);
 			RemoveLines(lines);
 		}

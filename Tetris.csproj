@@ -258,6 +258,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\FlashingBehaviour.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\LevelDesign.cs" />
     <Compile Include="Assets\Scripts\RandomExtensions.cs" />
     <Compile Include="Assets\Scripts\SquareBehaviour.cs" />
     <Compile Include="Assets\Scripts\TetriminoCollisions.cs" />
