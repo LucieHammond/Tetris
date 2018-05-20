@@ -59,7 +59,7 @@ public class TetriminoMoves : MonoBehaviour
         if (rightMoveActive)
 			SmoothReaction(KeyCode.RightArrow, ref timeRightPressed, MoveRight);
         
-		if (!regularFall || collisionManager.CheckBottom())
+		if (!regularFall)
 		    SmoothReaction(KeyCode.DownArrow, ref timeDownPressed, MoveDown);
         
 		if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -118,6 +118,4 @@ public class TetriminoMoves : MonoBehaviour
         }
 		hasMoved = false;
 	}
-
-
 }
