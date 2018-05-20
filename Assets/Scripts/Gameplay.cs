@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Application;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Gameplay : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class Gameplay : MonoBehaviour
 	private GameObject currentPiece;
 	private List<GameObject> nextPieces = new List<GameObject>();
 	private GameObject holdPiece;
+	private bool gameOver = false;
     
 	private PlayfieldState playfieldState;
 
@@ -39,6 +41,13 @@ public class Gameplay : MonoBehaviour
 
 	private void Update()
 	{
+		if (gameOver)
+		{
+			if (Input.anyKeyDown) {
+				SceneManager.LoadScene("GameScene");
+			}
+			return;
+		}
 		if (Input.GetKeyDown(KeyCode.Space))
 			SwitchWithHold();
 	}
@@ -108,5 +117,15 @@ public class Gameplay : MonoBehaviour
 		holdPiece.transform.position = holdPoint.position;
         holdPiece.transform.rotation = Quaternion.identity;
         holdPiece.GetComponent<TetriminoMoves>().isActive = false;
+	}
+
+    public void LaunchGameOver()
+	{
+		FrontMessageBackground.SetActive(true);
+        FrontMessageBackground.transform.localScale = new Vector3(2, 1, 1);
+        FrontMessageText.enabled = true;
+        FrontMessageText.fontSize = 40;
+		FrontMessageText.text = "GAME OVER";
+		gameOver = true;
 	}
 }

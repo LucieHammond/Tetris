@@ -32,8 +32,10 @@ public class PlayfieldState : MonoBehaviour {
             yield return new WaitForSeconds(0.9f);
             RemoveLines(lines);
         }
-
-        gameplay.SpawnTetrimino();
+		if (CheckGameOver())
+			gameplay.LaunchGameOver();
+		else
+            gameplay.SpawnTetrimino();
     }
 	
 	private List<int> CheckLines()
@@ -80,4 +82,14 @@ public class PlayfieldState : MonoBehaviour {
             }
         }
     }
+
+    private bool CheckGameOver()
+	{
+		for (int j = 0; j < playGrid[20].Length; j++)
+		{
+			if (playGrid[20][j])
+				return true;
+		}
+		return false;
+	}
 }
