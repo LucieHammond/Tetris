@@ -52,7 +52,7 @@ public class TetriminoCollisions : MonoBehaviour {
         return true;
     }
     
-	public bool CheckBottom()
+	public bool CheckBottom(int afterMoveX = 0)
     {
         Vector3 coords;
 		foreach (Transform space in squares)
@@ -60,15 +60,15 @@ public class TetriminoCollisions : MonoBehaviour {
             coords = space.position - playfieldStart;
 			if (coords.y <= 1)
                 return false;
-			if (playGrid[(int)coords.y - 1][(int)coords.x])
+			if (playGrid[(int)coords.y - 1][(int)coords.x + afterMoveX])
                 return false;
         }
         return true;
     }
     
-    public bool CheckRotation()
+	public bool CheckRotation(int afterMoveX = 0, int afterMoveY = 0)
 	{
-		Vector3 start = transform.position - playfieldStart;
+		Vector3 start = transform.position - playfieldStart + new Vector3(afterMoveX, afterMoveY);
 		int startX = (int)(start.x + 0.5f);
         int startY = (int)(start.y - 0.5f);
 

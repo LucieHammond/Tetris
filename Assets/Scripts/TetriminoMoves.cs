@@ -8,44 +8,40 @@ public class TetriminoMoves : MonoBehaviour
     public Vector3 rotationPoint;
 	public float speed // In nb of square fall per second
 	{
-		get { return 1 / timeInterval; }
-		set { timeInterval = 1 / value; }
+		get { return 1 / fallInterval; }
+		set { fallInterval = 1 / value; }
 	}
    
-	private bool hasMoved = false;
-    private bool leftMoveActive = true;
-    private bool rightMoveActive = true;
+	private bool rightMove;
+	private bool leftMove;
+	private bool downMove;
     
-	private float timeInterval = 0.4f;
+	private float fallInterval = 0.4f;
 	private float timeSinceLastFall = 0f;
     private float timeLeftPressed = 0f;
     private float timeRightPressed = 0f;
 	private float timeDownPressed = 0f;
     
 	private TetriminoCollisions collisionManager;
-
-    // Use this for initialization
+    
     private void Start()
     {
 		collisionManager = GetComponent<TetriminoCollisions>();
     }
-
-    // Update is called once per frame
+    
     private void Update()
     {
 		if (isActive)
 		{
 			bool regularFall = false;
-			if (timeSinceLastFall > timeInterval)
+			if (timeSinceLastFall > fallInterval)
 			{
 				MoveDown();
 				regularFall = true;
-				timeSinceLastFall -= timeInterval;
+				timeSinceLastFall -= fallInterval;
 			}
 			timeSinceLastFall += Time.deltaTime;
 				
-			if (hasMoved)
-                CheckCollisions();
 			MoveWithInputs(regularFall);
 		}
 
@@ -53,11 +49,11 @@ public class TetriminoMoves : MonoBehaviour
 
     private void MoveWithInputs(bool regularFall)
     {
-        if (leftMoveActive)
-			SmoothReaction(KeyCode.LeftArrow, ref timeLeftPressed, MoveLeft);
+		rightMove = false; leftMove = false; downMove = false;
 
-        if (rightMoveActive)
-			SmoothReaction(KeyCode.RightArrow, ref timeRightPressed, MoveRight);
+		SmoothReaction(KeyCode.LeftArrow, ref timeLeftPressed, MoveLeft);
+        
+		SmoothReaction(KeyCode.RightArrow, ref timeRightPressed, MoveRight);
         
 		if (!regularFall)
 		    SmoothReaction(KeyCode.DownArrow, ref timeDownPressed, MoveDown);
@@ -69,14 +65,14 @@ public class TetriminoMoves : MonoBehaviour
     private void SmoothReaction(KeyCode code, ref float timePassed, Action action)
 	{
 		if (Input.GetKeyDown(code))
-            action();
+			action();
         else if (Input.GetKey(code))
         {
             timePassed += Time.deltaTime;
             if (timePassed > 0.5)
             {
-                action();
                 timePassed -= 0.1f;
+				action();
             }
         }
         else if (Input.GetKeyUp(code))
@@ -85,37 +81,32 @@ public class TetriminoMoves : MonoBehaviour
 
     private void MoveRight()
 	{
-		transform.Translate(1, 0, 0, Space.World);
-		hasMoved = true;
+		if (collisionManager.CheckRight())
+			transform.Translate(1, 0, 0, Space.World);
 	}
     
 	private void MoveLeft()
     {
-		transform.Translate(-1, 0, 0, Space.World);
-		hasMoved = true;
+		if (collisionManager.CheckLeft())
+			transform.Translate(-1, 0, 0, Space.World);
     }
 
     private void MoveDown()
 	{
-		transform.Translate(0, -1, 0, Space.World);
-		hasMoved = true;
+		int xMove = (rightMove ? 1 : 0) - (leftMove ? 1 : 0);
+		if (collisionManager.CheckBottom(xMove))
+		    transform.Translate(0, -1, 0, Space.World);
+		else {
+			isActive = false;
+            collisionManager.Freeze();
+		}
 	}
 
     private void Rotate()
 	{
-		if (collisionManager.CheckRotation())
+		int xMove = (rightMove ? 1 : 0) - (leftMove ? 1 : 0);
+		int yMove = (downMove ? -1 : 0);
+		if (collisionManager.CheckRotation(xMove, yMove))
 		    transform.RotateAround(transform.position + transform.rotation * rotationPoint, Vector3.back, 90f);
-	}
-
-    private void CheckCollisions()
-	{
-		rightMoveActive = collisionManager.CheckRight();
-		leftMoveActive = collisionManager.CheckLeft();
-		if (!collisionManager.CheckBottom())
-        {
-			isActive = false;
-			collisionManager.Freeze();
-        }
-		hasMoved = false;
 	}
 }
