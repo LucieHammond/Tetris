@@ -53,3 +53,6 @@ TagManager:
   - name: Flash Lines
     uniqueID: 1621456725
     locked: 0
+  - name: Front Messages
+    uniqueID: 546264471
+    locked: 0

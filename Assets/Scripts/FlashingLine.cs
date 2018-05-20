@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class FlashingBehaviour : MonoBehaviour {
+public class FlashingLine : MonoBehaviour {
 
 	private Animator animator;
 	int startHash = Animator.StringToHash("startFlash");

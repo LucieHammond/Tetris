@@ -2,45 +2,39 @@
 using System.Collections;
 using UnityEngine;
 using Application;
+using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class Gameplay : MonoBehaviour
 {
 	public GameObject[] tetriminos;
-	public Vector3 spawnPoint = new Vector3(3, 22, 0);
-	public GameObject[][] playGrid { get; set; }
+	public Transform spawnPoint;
 	public Transform[] nextPoints;
 	public Transform holdPoint;
-	public FlashingBehaviour[] shiningLines;
+	public GameObject FrontMessageBackground;
+	public Text FrontMessageText;
 
 	private System.Random random = new System.Random();
 	private Queue<GameObject> generatedQueue = new Queue<GameObject>();
-	private List<GameObject> nextPieces = new List<GameObject>();
 	private GameObject currentPiece;
+	private List<GameObject> nextPieces = new List<GameObject>();
 	private GameObject holdPiece;
-
-	private LevelDesign levels;
+    
+	private PlayfieldState playfieldState;
 
 	// Use this for initialization
 	private void Start () {
-    
-		playGrid = new GameObject[22][];
-        for (int i = 0; i < playGrid.Length; i++)
-        {
-			playGrid[i] = new GameObject[10];
-        }
 
-		spawnPoint = transform.position + spawnPoint;
-		levels = GetComponent<LevelDesign>();
+		playfieldState = GetComponent<PlayfieldState>();
 
 		RandomGenerator();
 		for (int i = 0; i < 3; i++)
 		{
 			GameObject tetrimino = generatedQueue.Dequeue();
 			nextPieces.Add(Instantiate(tetrimino, nextPoints[i].position, Quaternion.identity));
-			nextPieces[i].GetComponent<TetriminoCollisions>().gameManager = this;
+			nextPieces[i].GetComponent<TetriminoCollisions>().playfield = playfieldState;
 		}
 
-		SpawnTetrimino();
+		StartCoroutine(StartCountDown());
 	}
 
 	private void Update()
@@ -56,7 +50,23 @@ public class GameManager : MonoBehaviour
             generatedQueue.Enqueue(nextBag[i]);
     }
 
-    private void SpawnTetrimino()
+    private IEnumerator StartCountDown()
+	{
+		FrontMessageBackground.SetActive(true);
+		FrontMessageBackground.transform.localScale = Vector3.one;
+		FrontMessageText.enabled = true;
+		FrontMessageText.fontSize = 100;
+		for (int number = 3; number > 0; number--) {
+			FrontMessageText.text = number.ToString();
+			yield return new WaitForSeconds(1);
+		}
+        
+		FrontMessageBackground.SetActive(false);
+		FrontMessageText.enabled = false;
+		SpawnTetrimino();
+	}
+
+    public void SpawnTetrimino()
 	{
 		if (generatedQueue.Count <= 0)
 			RandomGenerator();
@@ -69,70 +79,10 @@ public class GameManager : MonoBehaviour
 		}
 		GameObject tetrimino = generatedQueue.Dequeue();
 		nextPieces.Add(Instantiate(tetrimino, nextPoints[2].position, Quaternion.identity));
-		nextPieces[2].GetComponent<TetriminoCollisions>().gameManager = this;
+		nextPieces[2].GetComponent<TetriminoCollisions>().playfield = playfieldState;
 
-		currentPiece.transform.position = spawnPoint;
+		currentPiece.transform.position = spawnPoint.position;
 		currentPiece.GetComponent<TetriminoMoves>().isActive = true;
-	}
-    
-	public IEnumerator OnLanding()
-    {
-		List<int> lines = CheckLines();
-		if (lines.Count > 0)
-		{
-			foreach (int line in lines)
-			    shiningLines[line].Flash();
-			levels.NewLines(lines);
-			yield return new WaitForSeconds(0.9f);
-			RemoveLines(lines);
-		}
-			
-        SpawnTetrimino();
-    }
-    
-	private List<int> CheckLines()
-	{
-		List<int> completedLines = new List<int>();
-		for (int i = 0; i < playGrid.Length; i++)
-		{
-			bool completed = true;
-			for (int j = 0; j < playGrid[i].Length; j++)
-			{
-				if (!playGrid[i][j])
-				{
-					completed = false;
-					break;
-				}
-			}
-			if (completed)
-				completedLines.Add(i);
-		}
-		return completedLines;
-	}
-
-	private void RemoveLines(List<int> lines)
-	{
-		int offset = 0;
-		for (int i = 0; i < playGrid.Length; i++)
-		{
-			if (lines.Contains(i))
-			{
-				for (int j = 0; j < playGrid[i].Length; j++)
-				{
-					Destroy(playGrid[i][j]);
-				}    
-				offset++;
-			}
-			else
-			{
-				for (int j = 0; j < playGrid[i].Length; j++)
-                {
-                    if (offset > 0 && playGrid[i][j])
-                        playGrid[i][j].transform.Translate(0, -offset, 0, Space.World);
-					playGrid[i - offset][j] = playGrid[i][j];
-                }
-			}
-		}
 	}
     
     private void SwitchWithHold()
