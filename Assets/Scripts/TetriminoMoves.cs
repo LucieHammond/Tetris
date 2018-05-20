@@ -90,7 +90,7 @@ public class TetriminoMoves : MonoBehaviour
 		if (collisionManager.CheckLeft())
 			transform.Translate(-1, 0, 0, Space.World);
     }
-
+    
     private void MoveDown()
 	{
 		int xMove = (rightMove ? 1 : 0) - (leftMove ? 1 : 0);
@@ -107,6 +107,11 @@ public class TetriminoMoves : MonoBehaviour
 		int xMove = (rightMove ? 1 : 0) - (leftMove ? 1 : 0);
 		int yMove = (downMove ? -1 : 0);
 		if (collisionManager.CheckRotation(xMove, yMove))
-		    transform.RotateAround(transform.position + transform.rotation * rotationPoint, Vector3.back, 90f);
+		{
+			transform.RotateAround(transform.position + transform.rotation * rotationPoint, Vector3.back, 90f);
+			for (int i = 0; i < 4; i++){
+				transform.GetChild(i).Rotate(0, 0, 90);
+			}
+		}
 	}
 }
