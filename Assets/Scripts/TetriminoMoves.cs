@@ -101,13 +101,13 @@ public class TetriminoMoves : MonoBehaviour
 		if (collisionManager.CheckBottom(xMove))
 		{
 			transform.Translate(0, -1, 0, Space.World);
-			downMove = true;
 		}
 		else {
 			isActive = false;
             collisionManager.Freeze(usedSoftDrop);
 			LandingSound.Play();
 		}
+		downMove = true;
 	}
 
     private void Rotate()
