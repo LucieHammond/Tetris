@@ -15,6 +15,7 @@ public class Gameplay : MonoBehaviour
 	public Text FrontMessageText;
 	public AudioSource CountDown;
 	public AudioSource GameOver;
+	public GameObject ReplayWindow;
 
 	private System.Random random = new System.Random();
 	private Queue<GameObject> generatedQueue = new Queue<GameObject>();
@@ -48,7 +49,7 @@ public class Gameplay : MonoBehaviour
 		if (gameOver)
 		{
 			if (Input.anyKeyDown) {
-				SceneManager.LoadScene("GameScene");
+				ReplayWindow.SetActive(true);
 			}
 			return;
 		}
@@ -139,4 +140,14 @@ public class Gameplay : MonoBehaviour
 		gameOver = true;
 		GameOver.Play();
 	}
+
+	public void Replay()
+    {
+		SceneManager.LoadScene("GameScene");
+    }
+
+    public void GoToMenu()
+    {
+		SceneManager.LoadScene("MenuScene");
+    }
 }
