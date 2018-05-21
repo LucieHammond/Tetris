@@ -6,17 +6,13 @@ public class TetriminoMoves : MonoBehaviour
 {
 	public bool isActive { get; set; }
     public Vector3 rotationPoint;
-	public float speed // In nb of square fall per second
-	{
-		get { return 1 / fallInterval; }
-		set { fallInterval = 1 / value; }
-	}
+	public float timePerRaw = 1;
    
 	private bool rightMove;
 	private bool leftMove;
 	private bool downMove;
+	private bool usedSoftDrop = false;
     
-	private float fallInterval = 0.4f;
 	private float timeSinceLastFall = 0f;
     private float timeLeftPressed = 0f;
     private float timeRightPressed = 0f;
@@ -34,11 +30,11 @@ public class TetriminoMoves : MonoBehaviour
 		if (isActive)
 		{
 			bool regularFall = false;
-			if (timeSinceLastFall > fallInterval)
+			if (timeSinceLastFall > timePerRaw)
 			{
 				MoveDown();
 				regularFall = true;
-				timeSinceLastFall -= fallInterval;
+				timeSinceLastFall -= timePerRaw;
 			}
 			timeSinceLastFall += Time.deltaTime;
 				
@@ -71,7 +67,9 @@ public class TetriminoMoves : MonoBehaviour
             timePassed += Time.deltaTime;
             if (timePassed > 0.5)
             {
-                timePassed -= 0.1f;
+				timePassed -= (code == KeyCode.DownArrow)? 0.05f : 0.09f;
+				if (code == KeyCode.DownArrow)
+					usedSoftDrop = true;
 				action();
             }
         }
@@ -81,24 +79,31 @@ public class TetriminoMoves : MonoBehaviour
 
     private void MoveRight()
 	{
-		if (collisionManager.CheckRight())
+		if (collisionManager.CheckRight()) {
 			transform.Translate(1, 0, 0, Space.World);
+			rightMove = true;
+		}
 	}
     
 	private void MoveLeft()
     {
-		if (collisionManager.CheckLeft())
+		if (collisionManager.CheckLeft()) {
 			transform.Translate(-1, 0, 0, Space.World);
+			leftMove = true;
+		}
     }
     
     private void MoveDown()
 	{
 		int xMove = (rightMove ? 1 : 0) - (leftMove ? 1 : 0);
 		if (collisionManager.CheckBottom(xMove))
-		    transform.Translate(0, -1, 0, Space.World);
+		{
+			transform.Translate(0, -1, 0, Space.World);
+			downMove = true;
+		}
 		else {
 			isActive = false;
-            collisionManager.Freeze();
+            collisionManager.Freeze(usedSoftDrop);
 		}
 	}
 

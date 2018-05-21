@@ -331,6 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationPoint: {x: 2, y: -1, z: 0}
+  timePerRaw: 1
 --- !u!114 &114973013999636484
 MonoBehaviour:
   m_ObjectHideFlags: 1

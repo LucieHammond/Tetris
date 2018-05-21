@@ -21,8 +21,10 @@ public class PlayfieldState : MonoBehaviour {
         }
 	}
 
-	public IEnumerator OnLanding()
+	public IEnumerator OnLanding(bool usedSoftDrop)
     {
+		if (usedSoftDrop)
+			levels.IncreaseScore();
         List<int> lines = CheckLines();
         if (lines.Count > 0)
         {

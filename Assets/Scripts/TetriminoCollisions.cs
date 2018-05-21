@@ -103,7 +103,7 @@ public class TetriminoCollisions : MonoBehaviour {
 		return true;
 	}
 
-    public void Freeze()
+    public void Freeze(bool usedSoftDrop)
 	{
 		Vector3 coords;
 		foreach (Transform square in squares)
@@ -111,7 +111,7 @@ public class TetriminoCollisions : MonoBehaviour {
 			coords = square.position - playfieldStart;
 			playGrid[(int)coords.y][(int)coords.x] = square.gameObject;
 		}
-		StartCoroutine(playfield.OnLanding());
+		StartCoroutine(playfield.OnLanding(usedSoftDrop));
 
 	}
 }

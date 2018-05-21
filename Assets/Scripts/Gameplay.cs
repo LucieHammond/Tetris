@@ -22,11 +22,13 @@ public class Gameplay : MonoBehaviour
 	private bool gameOver = false;
     
 	private PlayfieldState playfieldState;
+	private LevelDesign levelDesign;
 
 	// Use this for initialization
 	private void Start () {
 
 		playfieldState = GetComponent<PlayfieldState>();
+		levelDesign = GetComponent<LevelDesign>();
 
 		RandomGenerator();
 		for (int i = 0; i < 3; i++)
@@ -92,6 +94,7 @@ public class Gameplay : MonoBehaviour
 
 		currentPiece.transform.position = spawnPoint.position;
 		currentPiece.GetComponent<TetriminoMoves>().isActive = true;
+		currentPiece.GetComponent<TetriminoMoves>().timePerRaw = levelDesign.GetTimePerRaw();
 	}
     
     private void SwitchWithHold()
@@ -105,6 +108,7 @@ public class Gameplay : MonoBehaviour
             currentPiece = holdPiece;
             currentPiece.transform.position = tempPiece.transform.position;
             currentPiece.GetComponent<TetriminoMoves>().isActive = true;
+			currentPiece.GetComponent<TetriminoMoves>().timePerRaw = levelDesign.GetTimePerRaw();
         }
         else
         {

@@ -4,22 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelDesign : MonoBehaviour {
-    
-	public int level {
-		get { return (int) (lines / 10) + 1; }
-	}
-	public int lines {
-		get { return linesSingle + linesDouble * 3 + linesTriple * 5 + linesTriple * 8; }
-	}
+	
 	public Text levelText;
 	public Text scoreText;
 	public Text linesText;
-
+    
 	private int score;
-	private int linesSingle;
-	private int linesDouble;
-	private int linesTriple;
-	private int linesTetris;
+	private int level = 1;
+	private int linesSingle = 0;
+	private int linesDouble = 0;
+	private int linesTriple = 0;
+	private int linesTetris = 0;
+	private int linesTetrisB2B = 0;
+	private int Lines {
+        get {
+            return linesSingle + linesDouble * 3 + linesTriple * 5
+                + linesTriple * 8 + linesTetrisB2B * 12;
+        }
+    }
+	private bool lastTetris = false;
     
     public void NewLines(List<int> lines)
 	{
@@ -32,32 +35,51 @@ public class LevelDesign : MonoBehaviour {
 				switch (consecutives){
 					case 1:
 						linesSingle++;
+						score += 10 * level;
 						break;
 					case 2:
 						linesDouble++;
+						score += 30 * level;
 						break;
 					case 3:
 						linesTriple++;
+						score += 50 * level;
 						break;
 					case 4:
-						linesTetris++;
+						if (!lastTetris) {
+							linesTetris++;
+							score += 80 * level;
+						}
+						else {
+							linesTetrisB2B++;
+							score += 120 * level;
+						}
 						break;
 				}
+				lastTetris = (consecutives == 4);
 				consecutives = 0;
 			}
 		}
-		score = linesSingle * 10 + linesDouble * 25 + linesTriple * 40 + linesTetris * 60;
+		level = (int) Lines / 5 + 1;
 		PrintScore();
 	}
 
 	private void PrintScore(){
 		levelText.text = level.ToString();
 		scoreText.text = score.ToString();
-		linesText.text = lines.ToString();
+		linesText.text = Lines.ToString();
 	}
     
-    public void GetSpeed()
+    public float GetTimePerRaw()
 	{
-		
+		float temp = 0.8f - (level - 1) * 0.007f;
+		temp = Mathf.Pow(temp, level - 1);
+		return Mathf.Round(temp * 1000000) / 1000000;
+	}
+
+	public void IncreaseScore()
+	{
+		score++;
+		PrintScore();
 	}
 }
