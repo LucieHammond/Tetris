@@ -264,6 +264,7 @@
     <Compile Include="Assets\Scripts\SquareBehaviour.cs" />
     <Compile Include="Assets\Scripts\TetriminoCollisions.cs" />
     <Compile Include="Assets\Scripts\TetriminoMoves.cs" />
+    <Compile Include="Assets\Scripts\WaitingBehaviour.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
