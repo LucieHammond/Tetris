@@ -6,6 +6,7 @@ public class WaitingBehaviour : MonoBehaviour {
 
 	public float waitingTime;
 	public RectTransform loadingBar;
+	public string sceneName;
     
 	void Start () {
 		StartCoroutine(WaitAndLoadScene());
@@ -19,7 +20,7 @@ public class WaitingBehaviour : MonoBehaviour {
 			loadingBar.sizeDelta = new Vector2(i * 3, loadingBar.sizeDelta.y);
 			yield return new WaitForSeconds(delta);
 		}
-		SceneManager.LoadScene("GameScene");
+		SceneManager.LoadScene(sceneName);
 	}
 
 }

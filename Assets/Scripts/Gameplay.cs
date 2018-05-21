@@ -52,6 +52,8 @@ public class Gameplay : MonoBehaviour
 		}
 		if (Input.GetKeyDown(KeyCode.Space))
 			SwitchWithHold();
+		if (Input.GetButtonDown("Alt"))
+			SceneManager.LoadScene("MenuScene");
 	}
 
 	private void RandomGenerator()
