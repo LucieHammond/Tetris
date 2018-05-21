@@ -259,6 +259,7 @@
     <Compile Include="Assets\Scripts\FlashingLine.cs" />
     <Compile Include="Assets\Scripts\Gameplay.cs" />
     <Compile Include="Assets\Scripts\LevelDesign.cs" />
+    <Compile Include="Assets\Scripts\LoadScene.cs" />
     <Compile Include="Assets\Scripts\PlayfieldState.cs" />
     <Compile Include="Assets\Scripts\RandomExtensions.cs" />
     <Compile Include="Assets\Scripts\SquareBehaviour.cs" />
