@@ -6,6 +6,7 @@ public class PlayfieldState : MonoBehaviour {
 
 	public GameObject[][] playGrid { get; set; }
 	public FlashingLine[] flashingLines;
+	public AudioSource LineCompleted;
 
 	private LevelDesign levels;
 	private Gameplay gameplay;
@@ -31,7 +32,8 @@ public class PlayfieldState : MonoBehaviour {
             foreach (int line in lines)
                 flashingLines[line].Flash();
             levels.NewLines(lines);
-            yield return new WaitForSeconds(0.9f);
+			LineCompleted.Play();
+            yield return new WaitForSeconds(0.95f);
             RemoveLines(lines);
         }
 		if (CheckGameOver())

@@ -13,6 +13,8 @@ public class Gameplay : MonoBehaviour
 	public Transform holdPoint;
 	public GameObject FrontMessageBackground;
 	public Text FrontMessageText;
+	public AudioSource CountDown;
+	public AudioSource GameOver;
 
 	private System.Random random = new System.Random();
 	private Queue<GameObject> generatedQueue = new Queue<GameObject>();
@@ -71,11 +73,13 @@ public class Gameplay : MonoBehaviour
 		FrontMessageText.fontSize = 100;
 		for (int number = 3; number > 0; number--) {
 			FrontMessageText.text = number.ToString();
+			CountDown.Play();
 			yield return new WaitForSeconds(1);
 		}
         
 		FrontMessageBackground.SetActive(false);
 		FrontMessageText.enabled = false;
+		GetComponent<AudioSource>().Play();
 		SpawnTetrimino();
 	}
 
@@ -133,5 +137,6 @@ public class Gameplay : MonoBehaviour
         FrontMessageText.fontSize = 40;
 		FrontMessageText.text = "GAME OVER";
 		gameOver = true;
+		GameOver.Play();
 	}
 }
