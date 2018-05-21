@@ -86,6 +86,7 @@ public class Gameplay : MonoBehaviour
 
     public void SpawnTetrimino()
 	{
+		Debug.Log("Spawn Tetrimino");
 		if (generatedQueue.Count <= 0)
 			RandomGenerator();
 
@@ -99,8 +100,9 @@ public class Gameplay : MonoBehaviour
 		nextPieces.Add(Instantiate(tetrimino, nextPoints[2].position, Quaternion.identity));
 		nextPieces[2].GetComponent<TetriminoCollisions>().playfield = playfieldState;
 
+		Debug.Log(currentPiece.name);
 		currentPiece.transform.position = spawnPoint.position;
-		currentPiece.GetComponent<TetriminoMoves>().isActive = true;
+ 		currentPiece.GetComponent<TetriminoMoves>().isActive = true;
 		currentPiece.GetComponent<TetriminoMoves>().timePerRaw = levelDesign.GetTimePerRaw();
 	}
     
@@ -127,6 +129,10 @@ public class Gameplay : MonoBehaviour
 		holdPiece = tempPiece;
 		holdPiece.transform.position = holdPoint.position;
         holdPiece.transform.rotation = Quaternion.identity;
+		for (int i = 0; i < 4; i++)
+        {
+            holdPiece.transform.GetChild(i).rotation = Quaternion.identity;
+        }
         holdPiece.GetComponent<TetriminoMoves>().isActive = false;
 	}
 
@@ -139,6 +145,7 @@ public class Gameplay : MonoBehaviour
 		FrontMessageText.text = "GAME OVER";
 		gameOver = true;
 		GameOver.Play();
+		levelDesign.SendStatistics();
 	}
 
 	public void Replay()

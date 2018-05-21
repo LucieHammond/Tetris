@@ -82,4 +82,10 @@ public class LevelDesign : MonoBehaviour {
 		score++;
 		PrintScore();
 	}
+
+    public void SendStatistics()
+	{
+		int[] lines = new int[5] { linesSingle, linesDouble, linesTriple, linesTetris, linesTetrisB2B };
+		Statistics.UpdateStatistics(level, score, lines);
+	}
 }

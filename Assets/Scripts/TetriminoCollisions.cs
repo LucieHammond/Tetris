@@ -25,20 +25,20 @@ public class TetriminoCollisions : MonoBehaviour {
 		playGrid = playfield.playGrid;
 	}
 
-    public bool CheckRight()
+	public bool CheckRight(int afterMoveY = 0)
 	{
 		Vector3 coords;
 		foreach (Transform square in squares) {
 			coords = square.position - playfieldStart;
 			if (coords.x >= 9)
 				return false;
-			if (playGrid[(int) coords.y][(int)coords.x + 1])
+			if (playGrid[(int) coords.y + afterMoveY][(int)coords.x + 1])
 				return false;
 		}
 		return true;
 	}
     
-	public bool CheckLeft()
+	public bool CheckLeft(int afterMoveY = 0)
     {
         Vector3 coords;
 		foreach (Transform space in squares)
@@ -46,7 +46,7 @@ public class TetriminoCollisions : MonoBehaviour {
             coords = space.position - playfieldStart;
             if (coords.x <= 1)
                 return false;
-			if (playGrid[(int) coords.y][(int)coords.x - 1])
+			if (playGrid[(int) coords.y + afterMoveY][(int)coords.x - 1])
                 return false;
         }
         return true;

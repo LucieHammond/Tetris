@@ -31,29 +31,27 @@ public class TetriminoMoves : MonoBehaviour
     {
 		if (isActive)
 		{
-			bool regularFall = false;
+			rightMove = false; leftMove = false; downMove = false;
+            
 			if (timeSinceLastFall > timePerRaw)
 			{
 				MoveDown();
-				regularFall = true;
 				timeSinceLastFall -= timePerRaw;
 			}
 			timeSinceLastFall += Time.deltaTime;
 				
-			MoveWithInputs(regularFall);
+			MoveWithInputs();
 		}
 
     }
 
-    private void MoveWithInputs(bool regularFall)
-    {
-		rightMove = false; leftMove = false; downMove = false;
-
+    private void MoveWithInputs()
+	{
 		SmoothReaction(KeyCode.LeftArrow, ref timeLeftPressed, MoveLeft);
         
 		SmoothReaction(KeyCode.RightArrow, ref timeRightPressed, MoveRight);
         
-		if (!regularFall)
+		if (!downMove)
 		    SmoothReaction(KeyCode.DownArrow, ref timeDownPressed, MoveDown);
         
 		if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -81,7 +79,8 @@ public class TetriminoMoves : MonoBehaviour
 
     private void MoveRight()
 	{
-		if (collisionManager.CheckRight()) {
+		int yMove = downMove ? -1 : 0;
+		if (collisionManager.CheckRight(yMove)) {
 			transform.Translate(1, 0, 0, Space.World);
 			rightMove = true;
 		}
@@ -89,7 +88,8 @@ public class TetriminoMoves : MonoBehaviour
     
 	private void MoveLeft()
     {
-		if (collisionManager.CheckLeft()) {
+		int yMove = downMove ? -1 : 0;
+		if (collisionManager.CheckLeft(yMove)) {
 			transform.Translate(-1, 0, 0, Space.World);
 			leftMove = true;
 		}

@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/HelpScene.unity
     guid: df6d5724c7ae1441d9dc07aa83ee4afd
+  - enabled: 1
+    path: Assets/StatisticScene.unity
+    guid: 71255c0c879094d3aa42115afadcf50d
