@@ -11,11 +11,11 @@ public class Gameplay : MonoBehaviour
 	public Transform spawnPoint;
 	public Transform[] nextPoints;
 	public Transform holdPoint;
-	public GameObject FrontMessageBackground;
-	public Text FrontMessageText;
-	public AudioSource CountDown;
-	public AudioSource GameOver;
-	public GameObject ReplayWindow;
+	public GameObject frontMessageBackground;
+	public Text frontMessageText;
+	public AudioSource countDownSound;
+	public AudioSource gameOverSound;
+	public GameObject replayWindow;
 
 	private System.Random random = new System.Random();
 	private Queue<GameObject> generatedQueue = new Queue<GameObject>();
@@ -26,12 +26,18 @@ public class Gameplay : MonoBehaviour
     
 	private PlayfieldState playfieldState;
 	private LevelDesign levelDesign;
+	private AudioSource musicSound;
 
 	// Use this for initialization
 	private void Start () {
 
 		playfieldState = GetComponent<PlayfieldState>();
 		levelDesign = GetComponent<LevelDesign>();
+		musicSound = GetComponent<AudioSource>();
+		musicSound.volume = Settings.musicVolume;
+		gameOverSound.volume = Settings.soundsVolume;
+		countDownSound.volume = Settings.soundsVolume;
+		MusicPlayer.DestroyInstance();
 
 		RandomGenerator();
 		for (int i = 0; i < 3; i++)
@@ -49,7 +55,7 @@ public class Gameplay : MonoBehaviour
 		if (gameOver)
 		{
 			if (Input.anyKeyDown) {
-				ReplayWindow.SetActive(true);
+				replayWindow.SetActive(true);
 			}
 			return;
 		}
@@ -68,25 +74,24 @@ public class Gameplay : MonoBehaviour
 
     private IEnumerator StartCountDown()
 	{
-		FrontMessageBackground.SetActive(true);
-		FrontMessageBackground.transform.localScale = Vector3.one;
-		FrontMessageText.enabled = true;
-		FrontMessageText.fontSize = 100;
+		frontMessageBackground.SetActive(true);
+		frontMessageBackground.transform.localScale = Vector3.one;
+		frontMessageText.enabled = true;
+		frontMessageText.fontSize = 100;
 		for (int number = 3; number > 0; number--) {
-			FrontMessageText.text = number.ToString();
-			CountDown.Play();
+			frontMessageText.text = number.ToString();
+			countDownSound.Play();
 			yield return new WaitForSeconds(1);
 		}
         
-		FrontMessageBackground.SetActive(false);
-		FrontMessageText.enabled = false;
-		GetComponent<AudioSource>().Play();
+		frontMessageBackground.SetActive(false);
+		frontMessageText.enabled = false;
+		musicSound.Play();
 		SpawnTetrimino();
 	}
 
     public void SpawnTetrimino()
 	{
-		Debug.Log("Spawn Tetrimino");
 		if (generatedQueue.Count <= 0)
 			RandomGenerator();
 
@@ -99,8 +104,7 @@ public class Gameplay : MonoBehaviour
 		GameObject tetrimino = generatedQueue.Dequeue();
 		nextPieces.Add(Instantiate(tetrimino, nextPoints[2].position, Quaternion.identity));
 		nextPieces[2].GetComponent<TetriminoCollisions>().playfield = playfieldState;
-
-		Debug.Log(currentPiece.name);
+        
 		currentPiece.transform.position = spawnPoint.position;
  		currentPiece.GetComponent<TetriminoMoves>().isActive = true;
 		currentPiece.GetComponent<TetriminoMoves>().timePerRaw = levelDesign.GetTimePerRaw();
@@ -138,13 +142,13 @@ public class Gameplay : MonoBehaviour
 
     public void LaunchGameOver()
 	{
-		FrontMessageBackground.SetActive(true);
-        FrontMessageBackground.transform.localScale = new Vector3(2, 1, 1);
-        FrontMessageText.enabled = true;
-        FrontMessageText.fontSize = 40;
-		FrontMessageText.text = "GAME OVER";
+		frontMessageBackground.SetActive(true);
+        frontMessageBackground.transform.localScale = new Vector3(2, 1, 1);
+        frontMessageText.enabled = true;
+        frontMessageText.fontSize = 40;
+		frontMessageText.text = "GAME OVER";
 		gameOver = true;
-		GameOver.Play();
+		gameOverSound.Play();
 		levelDesign.SendStatistics();
 	}
 

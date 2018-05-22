@@ -7,8 +7,8 @@ public class TetriminoMoves : MonoBehaviour
 	public bool isActive { get; set; }
     public Vector3 rotationPoint;
 	public float timePerRaw = 1;
-	public AudioSource RotationSound;
-	public AudioSource LandingSound;
+	public AudioSource rotationSound;
+	public AudioSource landingSound;
    
 	private bool rightMove;
 	private bool leftMove;
@@ -25,6 +25,8 @@ public class TetriminoMoves : MonoBehaviour
     private void Start()
     {
 		collisionManager = GetComponent<TetriminoCollisions>();
+		rotationSound.volume = Settings.soundsVolume;
+		landingSound.volume = Settings.soundsVolume;
     }
     
     private void Update()
@@ -105,7 +107,7 @@ public class TetriminoMoves : MonoBehaviour
 		else {
 			isActive = false;
             collisionManager.Freeze(usedSoftDrop);
-			LandingSound.Play();
+			landingSound.Play();
 		}
 		downMove = true;
 	}
@@ -120,7 +122,7 @@ public class TetriminoMoves : MonoBehaviour
 			for (int i = 0; i < 4; i++){
 				transform.GetChild(i).Rotate(0, 0, 90);
 			}
-			RotationSound.Play();
+			rotationSound.Play();
 		}
 	}
 }

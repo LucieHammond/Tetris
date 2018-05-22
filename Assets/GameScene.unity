@@ -1060,7 +1060,7 @@ MonoBehaviour:
   - {fileID: 106010561}
   - {fileID: 106010560}
   - {fileID: 106010559}
-  LineCompleted: {fileID: 227441620}
+  lineCompletedSound: {fileID: 227441620}
 --- !u!114 &646287217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,11 +1086,11 @@ MonoBehaviour:
   - {fileID: 251011088}
   - {fileID: 1785584523}
   holdPoint: {fileID: 1810936705}
-  FrontMessageBackground: {fileID: 1069202757}
-  FrontMessageText: {fileID: 512561430}
-  CountDown: {fileID: 1493478270}
-  GameOver: {fileID: 2103986376}
-  ReplayWindow: {fileID: 637681171}
+  frontMessageBackground: {fileID: 1069202757}
+  frontMessageText: {fileID: 512561430}
+  countDownSound: {fileID: 1493478270}
+  gameOverSound: {fileID: 2103986376}
+  replayWindow: {fileID: 637681171}
 --- !u!82 &646287218
 AudioSource:
   m_ObjectHideFlags: 0

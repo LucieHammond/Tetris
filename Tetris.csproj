@@ -261,12 +261,15 @@
     <Compile Include="Assets\Scripts\Gameplay.cs" />
     <Compile Include="Assets\Scripts\LevelDesign.cs" />
     <Compile Include="Assets\Scripts\LoadScene.cs" />
+    <Compile Include="Assets\Scripts\MusicPlayer.cs" />
     <Compile Include="Assets\Scripts\PlayfieldState.cs" />
     <Compile Include="Assets\Scripts\RandomExtensions.cs" />
+    <Compile Include="Assets\Scripts\Settings.cs" />
     <Compile Include="Assets\Scripts\SquareBehaviour.cs" />
     <Compile Include="Assets\Scripts\Statistics.cs" />
     <Compile Include="Assets\Scripts\TetriminoCollisions.cs" />
     <Compile Include="Assets\Scripts\TetriminoMoves.cs" />
+    <Compile Include="Assets\Scripts\VolumeSlider.cs" />
     <Compile Include="Assets\Scripts\WaitingBehaviour.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

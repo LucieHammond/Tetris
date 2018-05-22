@@ -6,7 +6,7 @@ public class PlayfieldState : MonoBehaviour {
 
 	public GameObject[][] playGrid { get; set; }
 	public FlashingLine[] flashingLines;
-	public AudioSource LineCompleted;
+	public AudioSource lineCompletedSound;
 
 	private LevelDesign levels;
 	private Gameplay gameplay;
@@ -14,6 +14,7 @@ public class PlayfieldState : MonoBehaviour {
 	void Start () {
 		levels = GetComponent<LevelDesign>();
 		gameplay = GetComponent<Gameplay>();
+		lineCompletedSound.volume = Settings.soundsVolume;
 
 		playGrid = new GameObject[22][];
         for (int i = 0; i < playGrid.Length; i++)
@@ -32,7 +33,7 @@ public class PlayfieldState : MonoBehaviour {
             foreach (int line in lines)
                 flashingLines[line].Flash();
             levels.NewLines(lines);
-			LineCompleted.Play();
+			lineCompletedSound.Play();
             yield return new WaitForSeconds(0.95f);
             RemoveLines(lines);
         }

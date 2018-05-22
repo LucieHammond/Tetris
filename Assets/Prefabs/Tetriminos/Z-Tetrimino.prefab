@@ -575,8 +575,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationPoint: {x: 1.5, y: -1.5, z: 0}
   timePerRaw: 1
-  RotationSound: {fileID: 82952702554617168}
-  LandingSound: {fileID: 82068306686118044}
+  rotationSound: {fileID: 82952702554617168}
+  landingSound: {fileID: 82068306686118044}
 --- !u!114 &114810467097367848
 MonoBehaviour:
   m_ObjectHideFlags: 1
