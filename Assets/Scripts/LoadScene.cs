@@ -5,19 +5,26 @@ using UnityEngine.UI;
 public class LoadScene : MonoBehaviour {
 
 	public string sceneName = "";
-	public bool disabled;
+	public bool checkLastMemory;
 
-	private void Start()
+	public void Start()
 	{
-		if (disabled)
+		if (checkLastMemory)
 		{
-			GetComponent<Button>().interactable = false;
+			GetComponent<Button>().interactable = LastGameMemory.lastNotFinished;         
 		}
 	}
 
 	public void OnClick()
 	{
-		if (sceneName != "") 
-		    SceneManager.LoadScene(sceneName);
+		if (sceneName != "")
+		{
+			if (checkLastMemory)
+            {
+                LastGameMemory.restoreGame = true;
+            }
+            SceneManager.LoadScene(sceneName);
+		}
+		    
 	}
 }

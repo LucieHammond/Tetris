@@ -259,11 +259,13 @@
     <Compile Include="Assets\Scripts\DisplayStatistics.cs" />
     <Compile Include="Assets\Scripts\FlashingLine.cs" />
     <Compile Include="Assets\Scripts\Gameplay.cs" />
+    <Compile Include="Assets\Scripts\LastGameMemory.cs" />
     <Compile Include="Assets\Scripts\LevelDesign.cs" />
     <Compile Include="Assets\Scripts\LoadScene.cs" />
     <Compile Include="Assets\Scripts\MusicPlayer.cs" />
     <Compile Include="Assets\Scripts\PlayfieldState.cs" />
     <Compile Include="Assets\Scripts\RandomExtensions.cs" />
+    <Compile Include="Assets\Scripts\RestoringBehaviour.cs" />
     <Compile Include="Assets\Scripts\Settings.cs" />
     <Compile Include="Assets\Scripts\SquareBehaviour.cs" />
     <Compile Include="Assets\Scripts\Statistics.cs" />

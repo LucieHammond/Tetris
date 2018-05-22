@@ -7,20 +7,30 @@ public class PlayfieldState : MonoBehaviour {
 	public GameObject[][] playGrid { get; set; }
 	public FlashingLine[] flashingLines;
 	public AudioSource lineCompletedSound;
+	public static PlayfieldState instance;
 
 	private LevelDesign levels;
 	private Gameplay gameplay;
+	private bool isRestored;
+
+	private void Awake()
+	{
+		instance = this;
+	}
 
 	void Start () {
 		levels = GetComponent<LevelDesign>();
 		gameplay = GetComponent<Gameplay>();
 		lineCompletedSound.volume = Settings.soundsVolume;
 
-		playGrid = new GameObject[22][];
-        for (int i = 0; i < playGrid.Length; i++)
-        {
-            playGrid[i] = new GameObject[10];
-        }
+        if (!isRestored)
+		{
+			playGrid = new GameObject[22][];
+            for (int i = 0; i < playGrid.Length; i++)
+            {
+                playGrid[i] = new GameObject[10];
+            }
+		}
 	}
 
 	public IEnumerator OnLanding(bool usedSoftDrop)
@@ -96,5 +106,11 @@ public class PlayfieldState : MonoBehaviour {
 				return true;
 		}
 		return false;
+	}
+
+	public void Restore(GameObject[][] pPlayGrid)
+	{
+		playGrid = pPlayGrid;
+		isRestored = true;
 	}
 }

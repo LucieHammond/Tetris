@@ -18,7 +18,8 @@ public class MusicPlayer : MonoBehaviour {
 
 	public static void DestroyInstance()
 	{
-		Destroy(instance.gameObject);
+		if (instance != null)
+		    Destroy(instance.gameObject);
 	}
 
 	public static void ChangeMusicVolume(float value)

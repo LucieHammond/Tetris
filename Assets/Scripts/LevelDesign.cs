@@ -23,8 +23,13 @@ public class LevelDesign : MonoBehaviour {
         }
     }
 	private bool lastTetris = false;
-    
-    public void NewLines(List<int> lines)
+
+	private void Start()
+	{
+		PrintScore();
+	}
+
+	public void NewLines(List<int> lines)
 	{
 		int consecutives = 0;
 		for (int i = 0; i <= 20; i++){
@@ -87,5 +92,22 @@ public class LevelDesign : MonoBehaviour {
 	{
 		int[] lines = new int[5] { linesSingle, linesDouble, linesTriple, linesTetris, linesTetrisB2B };
 		Statistics.UpdateStatistics(level, score, lines);
+	}
+
+	public void SaveInMemory()
+	{
+		int[] lines = new int[5] { linesSingle, linesDouble, linesTriple, linesTetris, linesTetrisB2B };
+		LastGameMemory.SaveLevels(score, level, lines);
+	}
+
+	public void Restore()
+	{
+		score = LastGameMemory.score;
+		level = LastGameMemory.level;
+		linesSingle = LastGameMemory.linesDetails[0];
+		linesDouble = LastGameMemory.linesDetails[1];
+		linesTriple = LastGameMemory.linesDetails[2];
+		linesTetris = LastGameMemory.linesDetails[3];
+		linesTetrisB2B = LastGameMemory.linesDetails[4];
 	}
 }

@@ -16,13 +16,14 @@ public class TetriminoCollisions : MonoBehaviour {
 	public int rotationSpaceSize;
 	public PlayfieldState playfield { private get; set; }
 
-	public GameObject[][] playGrid { private get; set; }
+	private GameObject[][] playGrid;
 	private Vector3 playfieldStart = new Vector3(-5, -10, 0);
 	private RotationState rotationState = RotationState.Normal;
 
-	// Use this for initialization
-	private void Start () {
-		playGrid = playfield.playGrid;
+	private void Start()
+	{
+		playfield = PlayfieldState.instance;
+        playGrid = playfield.playGrid;
 	}
 
 	public bool CheckRight(int afterMoveY = 0)

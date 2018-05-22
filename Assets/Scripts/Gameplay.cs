@@ -23,6 +23,7 @@ public class Gameplay : MonoBehaviour
 	private List<GameObject> nextPieces = new List<GameObject>();
 	private GameObject holdPiece;
 	private bool gameOver = false;
+	private bool isRestored = false;
     
 	private PlayfieldState playfieldState;
 	private LevelDesign levelDesign;
@@ -39,12 +40,14 @@ public class Gameplay : MonoBehaviour
 		countDownSound.volume = Settings.soundsVolume;
 		MusicPlayer.DestroyInstance();
 
-		RandomGenerator();
-		for (int i = 0; i < 3; i++)
+        if (!isRestored)
 		{
-			GameObject tetrimino = generatedQueue.Dequeue();
-			nextPieces.Add(Instantiate(tetrimino, nextPoints[i].position, Quaternion.identity));
-			nextPieces[i].GetComponent<TetriminoCollisions>().playfield = playfieldState;
+			RandomGenerator();
+            for (int i = 0; i < 3; i++)
+            {
+                GameObject tetrimino = generatedQueue.Dequeue();
+                nextPieces.Add(Instantiate(tetrimino, nextPoints[i].position, Quaternion.identity));
+            }
 		}
 
 		StartCoroutine(StartCountDown());
@@ -61,8 +64,12 @@ public class Gameplay : MonoBehaviour
 		}
 		if (Input.GetKeyDown(KeyCode.Space))
 			SwitchWithHold();
+
 		if (Input.GetButtonDown("Alt"))
+		{
+			RecordGame();
 			SceneManager.LoadScene("MenuScene");
+		}
 	}
 
 	private void RandomGenerator()
@@ -87,7 +94,11 @@ public class Gameplay : MonoBehaviour
 		frontMessageBackground.SetActive(false);
 		frontMessageText.enabled = false;
 		musicSound.Play();
-		SpawnTetrimino();
+
+		if (!isRestored)
+		    SpawnTetrimino();
+		else
+			currentPiece.GetComponent<TetriminoMoves>().isActive = true;
 	}
 
     public void SpawnTetrimino()
@@ -103,7 +114,6 @@ public class Gameplay : MonoBehaviour
 		}
 		GameObject tetrimino = generatedQueue.Dequeue();
 		nextPieces.Add(Instantiate(tetrimino, nextPoints[2].position, Quaternion.identity));
-		nextPieces[2].GetComponent<TetriminoCollisions>().playfield = playfieldState;
         
 		currentPiece.transform.position = spawnPoint.position;
  		currentPiece.GetComponent<TetriminoMoves>().isActive = true;
@@ -161,4 +171,23 @@ public class Gameplay : MonoBehaviour
     {
 		SceneManager.LoadScene("MenuScene");
     }
+
+	public void Restore(Queue<GameObject> pGeneratedQueue, GameObject pCurrentPiece,
+	                    List<GameObject> pNextPieces, GameObject pHoldPiece)
+	{
+		generatedQueue = pGeneratedQueue;
+		currentPiece = pCurrentPiece;
+		nextPieces = pNextPieces;
+		holdPiece = pHoldPiece;
+
+		isRestored = true;
+	}
+
+    private void RecordGame()
+	{
+		LastGameMemory.lastNotFinished = true;
+		LastGameMemory.SavePieces(generatedQueue, currentPiece, nextPieces, holdPiece);
+		LastGameMemory.SavePlayfield(playfieldState.playGrid);
+		levelDesign.SaveInMemory();
+	}
 }
