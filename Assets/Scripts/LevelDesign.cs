@@ -19,7 +19,7 @@ public class LevelDesign : MonoBehaviour {
 	private int Lines {
         get {
             return linesSingle + linesDouble * 3 + linesTriple * 5
-                + linesTriple * 8 + linesTetrisB2B * 12;
+                + linesTetris * 8 + linesTetrisB2B * 12;
         }
     }
 	private bool lastTetris = false;
